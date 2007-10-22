@@ -12,22 +12,22 @@ ActsAsWrappedClass is designed to automatically generate a wrapper for an object
 
 == SYNOPSIS:
 
-class Something
-  acts_as_wrapped_class :methods => [:safe_method]
-  # SomethingWrapper is now defined
+	class Something
+	  acts_as_wrapped_class :methods => [:safe_method]
+	  # SomethingWrapper is now defined
   
-  def safe_method  # allowed to access this method through SomethingWrapper
-    Something.new
-  end
+	  def safe_method  # allowed to access this method through SomethingWrapper
+	    Something.new
+	  end
 
-  def unsafe_method  # not allowed to access this method through SomethingWrapper
-  end
-end
+	  def unsafe_method  # not allowed to access this method through SomethingWrapper
+	  end
+	end
 
-s = Something.new
-wrapper = s.to_wrapper
-wrapper.safe_method    # returns a new SomethingWrapper
-wrapper.unsafe_method  # raises an exception
+	s = Something.new
+	wrapper = s.to_wrapper
+	wrapper.safe_method    # returns a new SomethingWrapper
+	wrapper.unsafe_method  # raises an exception
 
 == REQUIREMENTS:
 
