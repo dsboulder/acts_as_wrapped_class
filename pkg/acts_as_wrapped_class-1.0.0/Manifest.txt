@@ -1,7 +1,0 @@
-History.txt
-Manifest.txt
-README.txt
-Rakefile
-lib/acts_as_wrapped_class.rb
-lib/wrapper_base.rb
-test/test_acts_as_wrapped_class.rb

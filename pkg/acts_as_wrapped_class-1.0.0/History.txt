@@ -1,5 +1,0 @@
-== 1.0.0 / 2007-10-22
-
-* Release of the initial version of the gem  
-	* BUG: missing constants
-
