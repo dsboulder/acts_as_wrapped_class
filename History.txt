@@ -1,3 +1,7 @@
+== 1.0.1 / 2007-10-25
+
+* Added "allowed_methods to XWrappers"
+
 == 1.0.0 / 2007-10-22
 
 * Release of the initial version of the gem  

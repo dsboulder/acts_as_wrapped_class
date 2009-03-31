@@ -1,7 +1,7 @@
 require "erb"
 
 module ActsAsWrappedClass
-  VERSION = "1.0.0"
+  VERSION = "1.0.1"
   WRAPPED_CLASSES = []
   
   module InstanceMethods
@@ -61,10 +61,11 @@ module ActsAsWrappedClass
   # * options[:constants] contains a list of constant names (symbols) to allow access to
   # * options[:except_constants] contains a list of constant names (symbols) to not allow access to
   def acts_as_wrapped_class(options = {})
+    
     raise "Can't specify methods to allow and to deny." if options[:methods] && options[:except_methods]
     raise "Can't specify constants to allow and to deny." if options[:constants] && options[:except_constants]
-    options[:methods] ||= :all
-    options[:constants] ||= :all
+    options[:methods] ||= :all unless options[:except_methods]
+    options[:constants] ||= :all unless options[:except_constants]
     
     WRAPPED_CLASSES << self
     
@@ -76,7 +77,7 @@ module ActsAsWrappedClass
     if options[:constants] == :all
       options.delete(:constants)
       options[:except_constants] = []
-    end
+    end    
     
     meths = options[:methods] || options[:except_methods]
     consts = options[:constants] || options[:except_constants]
@@ -129,11 +130,21 @@ module ActsAsWrappedClass
     
     method_defs = ERB.new(method_defs_erb).result(binding)
     
+    allowed_methods = <<-EOF
+      def self.allowed_methods
+          #{ options[:except_methods] ? 
+                ("#{self.name}.public_instance_methods - [" + (meths + WrapperBase::ALLOWED_METHODS + ["to_wrapper"]).collect{|m| "\"#{m}\"" }.join(", ") + "]") :
+                ("[" + meths.collect{|m| "\"#{m}\""}.join(", ") + "]")
+            }
+      end
+    EOF
+        
     wrapper_class_code = <<-EOF
       class #{self.name}Wrapper < WrapperBase
-        #{method_defs}        
+        #{method_defs}
+        #{allowed_methods}
       end
-EOF
+    EOF
 
     eval wrapper_class_code, TOPLEVEL_BINDING
   end

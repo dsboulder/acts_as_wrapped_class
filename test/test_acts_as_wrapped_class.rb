@@ -28,7 +28,7 @@ end
 class OtherClass
   SAMPLE_CLASS = SampleClass.new
   
-  acts_as_wrapped_class :methods => :all, :constants => :all
+  acts_as_wrapped_class :except_methods => [:unsafe_method], :constants => :all
 
   attr_reader :value
 
@@ -46,6 +46,10 @@ class OtherClass
   
   def another_method
     6.6
+  end
+  
+  def unsafe_method
+    6.666
   end
   
   def hash
@@ -115,6 +119,14 @@ class ActsAsWrappedCodeTest < Test::Unit::TestCase
     assert SampleClass.wrapped_class?    
     assert OtherClass.wrapped_class?    
     assert !NotWrappedClass.wrapped_class?    
+  end
+  
+  def test_allowed_methods
+    assert SampleClassWrapper.allowed_methods.is_a?(Array)
+    assert_equal ["get_other_class", "other_method"], SampleClassWrapper.allowed_methods
+    assert !OtherClassWrapper.allowed_methods.include?("unsafe_method")
+    assert OtherClassWrapper.allowed_methods.include?("another_method")
+    assert OtherClassWrapper.allowed_methods.include?("get_hash")
   end
   
   def assert_contents_same(array1, array2)
