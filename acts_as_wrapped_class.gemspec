@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.date = %q{2009-04-04}
   s.description = %q{ActsAsWrappedClass is a gem which easily creates proxy classes for use in the freaky-freaky-sandbox}
   s.email = %q{david@flouri.sh}
-  s.files = ["README.txt", "History.txt"]
+  s.files = ["README.txt", "History.txt", "lib/acts_as_wrapped_class.rb", "lib/wrapper_base.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/dsboulder/acts_as_wrapped_cass}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
