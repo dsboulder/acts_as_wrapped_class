@@ -1,6 +1,6 @@
 ActsAsWrappedClass
     by David Stevenson 
-    http://elctech.com/blog
+    http://flouri.sh
 
 == DESCRIPTION:
   
