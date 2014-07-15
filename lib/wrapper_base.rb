@@ -1,7 +1,7 @@
 class WrapperBase
   ALLOWED_METHODS = ["__id__","__send__", "is_a?", "kind_of?", "hash", "class", "inspect"]
   
-  eval((public_instance_methods - ALLOWED_METHODS).collect{|meth| "undef "+meth}.join("; "))
+  eval((public_instance_methods - ALLOWED_METHODS).collect{|meth| "undef "+meth.to_s}.join("; "))
 
   # Create a wrapper, passing in an object to wrap
   def initialize(wrapped_object)
